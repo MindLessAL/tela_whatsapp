@@ -1,5 +1,6 @@
 package com.example.zapzap
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,14 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,31 +29,46 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ZapZapTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-                    TopAppBar(
-                        title = { Text(text = "ZapZap") },
-                        actions = {
-                            Icon(Icons.Default.CameraAlt, contentDescription = null)
-                            Icon(Icons.Default.MoreVert, contentDescription = null)
-                        }
-
-                    )
-                }
-                    ) { innerPadding ->
-                    ChatsListScreen(modifier = Modifier.padding(innerPadding))
-
-
-                }
+                MainScreen()
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen() {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = { MyTopBar(title = "ZapZap") }
+    ) { innerPadding ->
+        ChatsListScreen(modifier = Modifier.padding(innerPadding))
+    }
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyTopBar(title: String) {
+    TopAppBar(
+        title = { Text(text = title) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Blue, // Cor de fundo da TopBar
+            titleContentColor = Color.White // Cor do título
+        ),
+        actions = {
+            IconButton(onClick = { /* Ação da câmera */ }) {
+                Icon(Icons.Default.CameraAlt, contentDescription = "Abrir câmera")
+            }
+            IconButton(onClick = { /* Ação do menu */ }) {
+                Icon(Icons.Default.MoreVert, contentDescription = "Abrir menu")
+            }
+        }
+    )
+}
 
 @Composable
-fun ChatsListScreen(modifier: Modifier = Modifier){
-    Box(modifier = modifier.fillMaxSize()){
+fun ChatsListScreen(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
         Text(
             text = "Chats List",
             Modifier.align(Alignment.Center),
@@ -67,3 +80,10 @@ fun ChatsListScreen(modifier: Modifier = Modifier){
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun PreviewMainScreen() {
+    ZapZapTheme {
+        MainScreen()
+    }
+}
