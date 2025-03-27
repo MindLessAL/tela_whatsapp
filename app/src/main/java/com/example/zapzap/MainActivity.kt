@@ -98,7 +98,7 @@ fun App() {
     LaunchedEffect(pagerState.targetPage) {
         selectItem = items[pagerState.targetPage]
     }
-
+    // TEST
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
